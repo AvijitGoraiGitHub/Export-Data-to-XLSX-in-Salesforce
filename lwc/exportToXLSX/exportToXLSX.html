@@ -1,0 +1,55 @@
+<template>
+
+    <!-- Card container -->
+    <lightning-card title="Account Excel Download" icon-name="standard:account">
+
+        <div class="slds-m-around_medium">
+
+            <!-- Download Button -->
+            <!-- Disabled when file generation is in progress -->
+            <lightning-button 
+                label="Download Excel (.xlsx)"
+                variant="brand"
+                onclick={handleDownload}
+                disabled={isLoading}>
+            </lightning-button>
+
+            <!-- Spinner shown during processing -->
+            <template if:true={isLoading}>
+                <lightning-spinner 
+                    alternative-text="Generating Excel..." 
+                    size="medium">
+                </lightning-spinner>
+            </template>
+
+            <!-- Error display -->
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-m-top_small">
+                    Error loading data
+                </div>
+            </template>
+
+            <!-- Data preview -->
+            <template if:true={accounts}>
+
+                <!-- Record count -->
+                <div class="slds-m-top_medium">
+                    <p><b>Total Records:</b> {accounts.length}</p>
+                </div>
+
+                <!-- Datatable -->
+                <!-- Used only for preview, not for export -->
+                <lightning-datatable
+                    key-field="Id"
+                    data={accounts}
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>
